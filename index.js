@@ -439,10 +439,16 @@ async function updateWorldState() {
             ws.chapter = (result.chapter !== undefined && result.chapter > ws.chapter) ? result.chapter : ws.chapter + 1;
             console.log('[宿命蛊] 新章节:', ws.chapter);
 
+            // 兼容两种格式：嵌套对象(fangYuan.location)和扁平(fangYuanLocation)
             if (result.fangYuan) {
                 ws.fangYuan.location = result.fangYuan.location || ws.fangYuan.location;
                 ws.fangYuan.action = result.fangYuan.action || ws.fangYuan.action;
+            } else {
+                // 兼容扁平格式
+                ws.fangYuan.location = result.fangYuanLocation || ws.fangYuan.location;
+                ws.fangYuan.action = result.fangYuanAction || ws.fangYuan.action;
             }
+            console.log('[宿命蛊] 方源状态更新:', ws.fangYuan);
 
             if (result.npcs) ws.npcs = result.npcs;
             if (result.locations) ws.locations = result.locations;
