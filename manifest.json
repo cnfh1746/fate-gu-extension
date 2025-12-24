@@ -1,0 +1,12 @@
+{
+    "display_name": "宿命蛊 - 活世界系统",
+    "loading_order": 15,
+    "requires": [],
+    "optional": [],
+    "js": "index.js",
+    "css": "style.css",
+    "author": "cnfh1746",
+    "version": "1.0.0",
+    "homePage": "",
+    "auto_update": false
+}

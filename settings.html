@@ -1,0 +1,80 @@
+<div id="fate-gu-panel" class="extension_settings">
+    <div class="inline-drawer">
+        <div class="inline-drawer-toggle inline-drawer-header">
+            <b>🔮 宿命蛊 - 活世界系统</b>
+            <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+        </div>
+        <div class="inline-drawer-content">
+            <!-- 基础设置 -->
+            <div class="fate-gu-section">
+                <label>
+                    <input type="checkbox" id="fate-gu-enabled">
+                    启用宿命蛊
+                </label>
+                <small>启用后，每次对话将自动推进世界状态</small>
+            </div>
+
+            <!-- 世界书设置 -->
+            <div class="fate-gu-section">
+                <label for="fate-gu-worldbook">目标世界书</label>
+                <input type="text" id="fate-gu-worldbook" placeholder="蛊真人">
+                <small>世界状态将写入此世界书</small>
+            </div>
+
+            <div class="fate-gu-section">
+                <label for="fate-gu-context-depth">上下文深度</label>
+                <input type="number" id="fate-gu-context-depth" min="1" max="20" value="5">
+                <small>读取最近N楼对话用于分析</small>
+            </div>
+
+            <!-- API设置 -->
+            <div class="fate-gu-section">
+                <h5>🔌 API设置（可选）</h5>
+                <label for="fate-gu-api-url">API地址</label>
+                <input type="text" id="fate-gu-api-url" placeholder="留空使用ST默认API">
+
+                <label for="fate-gu-api-key">API密钥</label>
+                <input type="password" id="fate-gu-api-key" placeholder="sk-...">
+
+                <label for="fate-gu-api-model">模型名称</label>
+                <input type="text" id="fate-gu-api-model" placeholder="gpt-3.5-turbo">
+            </div>
+
+            <!-- 当前状态 -->
+            <div class="fate-gu-section fate-gu-status">
+                <h5>📊 当前世界状态</h5>
+                <p><strong>章节：</strong><span id="fate-gu-chapter" class="chapter">第1章</span></p>
+                <p><strong>方源位置：</strong><span id="fate-gu-location">-</span></p>
+                <p><strong>方源行动：</strong><span id="fate-gu-action">-</span></p>
+                <p><strong>危险等级：</strong><span id="fate-gu-danger" class="danger-safe">安全</span></p>
+                <p><strong>世界动态：</strong><span id="fate-gu-dynamic">-</span></p>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="fate-gu-section">
+                <button class="fate-gu-btn fate-gu-btn-primary" id="fate-gu-manual-update">
+                    🔄 手动推进世界
+                </button>
+                <button class="fate-gu-btn fate-gu-btn-danger" id="fate-gu-reset">
+                    ↩️ 重置世界（第1章）
+                </button>
+            </div>
+
+            <!-- 高级设置 -->
+            <div class="inline-drawer">
+                <div class="inline-drawer-toggle inline-drawer-header">
+                    <span>⚙️ 高级设置</span>
+                    <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
+                </div>
+                <div class="inline-drawer-content">
+                    <div class="fate-gu-section">
+                        <label for="fate-gu-world-prompt">世界推进提示词</label>
+                        <textarea id="fate-gu-world-prompt" rows="10"></textarea>
+                        <small>用于指导AI如何推进世界状态</small>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

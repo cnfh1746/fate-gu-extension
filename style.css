@@ -1,0 +1,146 @@
+/* 宿命蛊 - 活世界系统样式 */
+
+#fate-gu-panel {
+    padding: 10px;
+}
+
+#fate-gu-panel h4 {
+    margin-bottom: 10px;
+    color: #8b0000;
+    border-bottom: 1px solid #8b0000;
+    padding-bottom: 5px;
+}
+
+.fate-gu-section {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(139, 0, 0, 0.05);
+    border-radius: 5px;
+    border-left: 3px solid #8b0000;
+}
+
+.fate-gu-section label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.fate-gu-section input,
+.fate-gu-section select,
+.fate-gu-section textarea {
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-bottom: 5px;
+}
+
+.fate-gu-section textarea {
+    min-height: 100px;
+    font-family: monospace;
+    font-size: 12px;
+}
+
+.fate-gu-status {
+    padding: 10px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.fate-gu-status .chapter {
+    font-size: 18px;
+    font-weight: bold;
+    color: #8b0000;
+}
+
+.fate-gu-status .danger-safe {
+    color: #28a745;
+}
+
+.fate-gu-status .danger-warning {
+    color: #ffc107;
+}
+
+.fate-gu-status .danger-danger {
+    color: #dc3545;
+}
+
+.fate-gu-status .danger-fatal {
+    color: #8b0000;
+    font-weight: bold;
+}
+
+.fate-gu-btn {
+    padding: 8px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.fate-gu-btn-primary {
+    background: #8b0000;
+    color: white;
+}
+
+.fate-gu-btn-primary:hover {
+    background: #a00000;
+}
+
+.fate-gu-btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.fate-gu-btn-secondary:hover {
+    background: #5a6268;
+}
+
+.fate-gu-btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.fate-gu-btn-danger:hover {
+    background: #c82333;
+}
+
+/* 死亡提示模态框 */
+.fate-gu-death-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.fate-gu-death-content {
+    text-align: center;
+    color: #8b0000;
+    max-width: 500px;
+    padding: 30px;
+}
+
+.fate-gu-death-content h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.fate-gu-death-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #ccc;
+}
+
+.fate-gu-death-content .rebirth-text {
+    margin-top: 30px;
+    font-style: italic;
+    color: #666;
+}
