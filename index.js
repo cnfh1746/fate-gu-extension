@@ -388,18 +388,29 @@ async function updateWorldState() {
 
         if (!response) {
             console.error('[宿命蛊] AI返回为空');
+            toastr.error('AI返回为空', '宿命蛊');
             return;
         }
 
+        console.log('[宿命蛊] AI响应:', response.substring(0, 500));
+
         try {
             const jsonMatch = response.match(/\{[\s\S]*\}/);
-            if (!jsonMatch) throw new Error('未找到JSON');
+            if (!jsonMatch) {
+                console.error('[宿命蛊] JSON匹配失败，原始响应:', response);
+                throw new Error('未找到JSON');
+            }
+
+            console.log('[宿命蛊] 提取的JSON:', jsonMatch[0].substring(0, 300));
 
             const result = JSON.parse(jsonMatch[0]);
 
-            // 更新世界状态
+            console.log('[宿命蛊] 解析结果:', result);
+
+            // 更新世界状态 - 章节强制+1
             ws.time = result.time || ws.time;
-            ws.chapter = result.chapter || ws.chapter;
+            ws.chapter = (result.chapter !== undefined && result.chapter > ws.chapter) ? result.chapter : ws.chapter + 1;
+            console.log('[宿命蛊] 新章节:', ws.chapter);
 
             if (result.fangYuan) {
                 ws.fangYuan.location = result.fangYuan.location || ws.fangYuan.location;
