@@ -1,7 +1,7 @@
 <div id="fate-gu-panel" class="extension_settings">
     <div class="inline-drawer">
         <div class="inline-drawer-toggle inline-drawer-header">
-            <b>🔮 宿命蛊 - 活世界系统</b>
+            <b>🔮 宿命蛊 - 活世界系统 v2.0</b>
             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
         </div>
         <div class="inline-drawer-content">
@@ -40,14 +40,28 @@
                 <input type="text" id="fate-gu-api-model" placeholder="gpt-3.5-turbo">
             </div>
 
-            <!-- 当前状态 -->
+            <!-- 当前世界状态 -->
             <div class="fate-gu-section fate-gu-status">
                 <h5>📊 当前世界状态</h5>
+                <p><strong>时间：</strong><span id="fate-gu-time">-</span></p>
                 <p><strong>章节：</strong><span id="fate-gu-chapter" class="chapter">第1章</span></p>
                 <p><strong>方源位置：</strong><span id="fate-gu-location">-</span></p>
                 <p><strong>方源行动：</strong><span id="fate-gu-action">-</span></p>
+            </div>
+
+            <!-- 玩家状态 -->
+            <div class="fate-gu-section fate-gu-status">
+                <h5>👤 玩家状态</h5>
+                <p><strong>修为：</strong><span id="fate-gu-player-cultivation">凡人</span></p>
+                <p><strong>元石：</strong><span id="fate-gu-player-money">0</span></p>
+                <p><strong>蛊虫：</strong><span id="fate-gu-player-gu">无</span></p>
                 <p><strong>危险等级：</strong><span id="fate-gu-danger" class="danger-safe">安全</span></p>
-                <p><strong>世界动态：</strong><span id="fate-gu-dynamic">-</span></p>
+            </div>
+
+            <!-- 世界动态 -->
+            <div class="fate-gu-section">
+                <h5>🌍 世界动态</h5>
+                <p id="fate-gu-dynamic">-</p>
             </div>
 
             <!-- 操作按钮 -->
@@ -69,7 +83,7 @@
                 <div class="inline-drawer-content">
                     <div class="fate-gu-section">
                         <label for="fate-gu-world-prompt">世界推进提示词</label>
-                        <textarea id="fate-gu-world-prompt" rows="10"></textarea>
+                        <textarea id="fate-gu-world-prompt" rows="15"></textarea>
                         <small>用于指导AI如何推进世界状态</small>
                     </div>
                 </div>
