@@ -653,6 +653,13 @@ ${locText}
 【即将发生】${ws.nextEvent}
 </fate_gu>`;
 
+        // 调试：打印即将写入的内容
+        console.log('[宿命蛊] ===== 即将写入世界书 =====');
+        console.log('[宿命蛊] 写入方源:', ws.fangYuan);
+        console.log('[宿命蛊] 写入NPC:', JSON.stringify(ws.npcs));
+        console.log('[宿命蛊] 写入内容长度:', content.length);
+        console.log('[宿命蛊] 写入内容预览:', content.substring(0, 500));
+
         if (fateEntry) {
             fateEntry.content = content;
         } else {
