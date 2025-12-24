@@ -706,13 +706,16 @@ jQuery(async () => {
 
     updateStatusDisplay();
 
-    if (settings.triggerMode === 'auto') {
-        eventSource.on(event_types.MESSAGE_RECEIVED, async () => {
-            if (settings.enabled) {
-                await updateWorldState();
-            }
-        });
-    }
+    // 始终监听消息事件，在回调中检查设置
+    eventSource.on(event_types.MESSAGE_RECEIVED, async () => {
+        const currentSettings = extension_settings[extensionName];
+        console.log('[宿命蛊] MESSAGE_RECEIVED事件触发', { enabled: currentSettings.enabled, triggerMode: currentSettings.triggerMode });
 
-    console.log('[宿命蛊] 扩展已加载 v2.0');
+        if (currentSettings.enabled && currentSettings.triggerMode === 'auto') {
+            console.log('[宿命蛊] 自动触发世界更新');
+            await updateWorldState();
+        }
+    });
+
+    console.log('[宿命蛊] 扩展已加载 v2.1 - 自动触发已修复');
 });
