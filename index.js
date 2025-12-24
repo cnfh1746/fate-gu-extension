@@ -428,49 +428,82 @@ async function updateWorldState() {
                 throw new Error('未找到JSON');
             }
 
-            console.log('[宿命蛊] 提取的JSON:', jsonMatch[0].substring(0, 300));
+
+            console.log('[宿命蛊] 提取的JSON:', jsonMatch[0].substring(0, 500));
 
             const result = JSON.parse(jsonMatch[0]);
 
-            console.log('[宿命蛊] 解析结果:', result);
+            console.log('[宿命蛊] ========== 完整解析结果 ==========');
+            console.log('[宿命蛊] 解析结果:', JSON.stringify(result, null, 2));
 
-            // 更新世界状态 - 章节强制+1
+            // ===== 1. 时间和章节 =====
             ws.time = result.time || ws.time;
             ws.chapter = (result.chapter !== undefined && result.chapter > ws.chapter) ? result.chapter : ws.chapter + 1;
-            console.log('[宿命蛊] 新章节:', ws.chapter);
+            console.log('[宿命蛊] 时间:', ws.time, '章节:', ws.chapter);
 
-            // 兼容两种格式：嵌套对象(fangYuan.location)和扁平(fangYuanLocation)
-            if (result.fangYuan) {
+            // ===== 2. 方源状态 - 兼容多种格式 =====
+            if (result.fangYuan && typeof result.fangYuan === 'object') {
                 ws.fangYuan.location = result.fangYuan.location || ws.fangYuan.location;
                 ws.fangYuan.action = result.fangYuan.action || ws.fangYuan.action;
-            } else {
-                // 兼容扁平格式
+            } else if (result.fangYuanLocation || result.fangYuanAction) {
                 ws.fangYuan.location = result.fangYuanLocation || ws.fangYuan.location;
                 ws.fangYuan.action = result.fangYuanAction || ws.fangYuan.action;
             }
-            console.log('[宿命蛊] 方源状态更新:', ws.fangYuan);
+            console.log('[宿命蛊] 方源:', ws.fangYuan);
 
-            if (result.npcs) ws.npcs = result.npcs;
-            if (result.locations) ws.locations = result.locations;
+            // ===== 3. NPC状态 - 深度合并 =====
+            if (result.npcs && typeof result.npcs === 'object') {
+                for (const [npcName, npcData] of Object.entries(result.npcs)) {
+                    if (!ws.npcs[npcName]) {
+                        ws.npcs[npcName] = { status: '未知', plan: '未知' };
+                    }
+                    if (typeof npcData === 'object') {
+                        ws.npcs[npcName].status = npcData.status || ws.npcs[npcName].status;
+                        ws.npcs[npcName].plan = npcData.plan || ws.npcs[npcName].plan;
+                    } else if (typeof npcData === 'string') {
+                        ws.npcs[npcName].status = npcData;
+                    }
+                }
+            }
+            console.log('[宿命蛊] NPC状态:', ws.npcs);
 
-            if (result.player) {
+            // ===== 4. 地点状态 - 深度合并 =====
+            if (result.locations && typeof result.locations === 'object') {
+                for (const [locName, locStatus] of Object.entries(result.locations)) {
+                    ws.locations[locName] = locStatus;
+                }
+            }
+            console.log('[宿命蛊] 地点状态:', ws.locations);
+
+            // ===== 5. 玩家状态 =====
+            if (result.player && typeof result.player === 'object') {
                 ws.player.cultivation = result.player.cultivation || ws.player.cultivation;
-                ws.player.money = result.player.money ?? ws.player.money;
-                ws.player.gu = result.player.gu || ws.player.gu;
+                ws.player.money = (result.player.money !== undefined && result.player.money !== null) ? result.player.money : ws.player.money;
+                ws.player.gu = Array.isArray(result.player.gu) ? result.player.gu : ws.player.gu;
                 ws.player.location = result.player.location || ws.player.location;
             }
+            console.log('[宿命蛊] 玩家状态:', ws.player);
 
+            // ===== 6. 世界动态 =====
             ws.currentEvent = result.currentEvent || ws.currentEvent;
             ws.nextEvent = result.nextEvent || ws.nextEvent;
             ws.worldDynamic = result.worldDynamic || ws.worldDynamic;
-            ws.danger = result.danger || '安全';
-            ws.dangerSource = result.dangerSource;
+            console.log('[宿命蛊] 世界动态:', ws.worldDynamic);
+            console.log('[宿命蛊] 即将发生:', ws.nextEvent);
 
-            if (result.isDead) {
+            // ===== 7. 危险评估 =====
+            ws.danger = result.danger || '安全';
+            ws.dangerSource = result.dangerSource || null;
+            console.log('[宿命蛊] 危险:', ws.danger, '来源:', ws.dangerSource);
+
+            // ===== 8. 死亡判定 =====
+            if (result.isDead === true) {
                 ws.isDead = true;
-                ws.deathReason = result.deathReason;
-                await handleDeath(result.deathReason);
+                ws.deathReason = result.deathReason || '未知原因';
+                console.log('[宿命蛊] !!!!! 死亡判定 !!!!!', ws.deathReason);
+                await handleDeath(ws.deathReason);
             } else {
+                console.log('[宿命蛊] ========== 写入世界书 ==========');
                 await writeWorldStateToLorebook();
                 toastr.success(`第${ws.chapter}章 - ${ws.danger}`, '宿命蛊');
             }
